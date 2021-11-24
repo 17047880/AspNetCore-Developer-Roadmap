@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Bootstrap Site</title>
+    <script type="text/javascript">
+        // getLocation();
+        // define the data to create new account
+
+
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.watchPosition(showPosition);
+            } else {
+
+            }
+        }
+
+        function showPosition(position) {
+            var data = {
+                "name": "Sample Account",
+                " msdyn_longitude @OData.Community.Display.V1.FormattedValue ": position.coords.longitude,
+
+            }
+
+            // create account record
+            Xrm.WebApi.createRecord("msdyn_functionallocations", data).then(
+                function success(result) {
+                    console.log("Location " + result.id);
+                    // perform operations on record creation
+                },
+                function(error) {
+                    console.log(error.message);
+                    // handle error conditions
+                }
+            );
+            return (position.coords);
+        }
+    </script>
+</head>
+
+<body>
+    <button onclick="getLocation()" id="checkInbtn">Check In</button>
+</body>
+
+</html>
